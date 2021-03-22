@@ -24,8 +24,8 @@ namespace MakeS3RequestTest
         {
             var options = new CredentialProfileOptions
             {
-                AccessKey = "AKIAYY2V6QTYTGMSKNO2",
-                SecretKey = "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"
+                AccessKey = "放在rdisk",
+                SecretKey = "放在rdisk"
             };
             var profile = new Amazon.Runtime.CredentialManagement.CredentialProfile("gino355140", options);
             profile.Region = RegionEndpoint.APNortheast3;
@@ -50,8 +50,8 @@ namespace MakeS3RequestTest
                 string sqlStr = "Select * from S3Object"; //除from S3Object固定外，其餘皆和一般SQL語法相同 
 
                 //列出bucket and bucket內的東西
-                DateTime start = new DateTime(2019, 09, 01); //起始時間
-                DateTime end = new DateTime(2020, 01, 30);   //結束時間
+                DateTime start = new DateTime(2021, 01, 01); //起始時間
+                DateTime end = new DateTime(2021, 03, 30);   //結束時間
                 List<string> keys = getYearMotnhs(start, end);  //時間區間轉字串
                 foreach (string key in keys)
                 {
@@ -65,7 +65,7 @@ namespace MakeS3RequestTest
                 var result2 = GetSelectObjectContent("2021/01/SQL_Test.csv", sqlStr);
                 Console.WriteLine("---------------------");
 
-                //上傳物件
+                //上傳物件，測試前請先看一下上傳內容
                 //WritingAnObjectAsync().Wait();
 
 
@@ -290,7 +290,7 @@ namespace MakeS3RequestTest
             }
         }
 
-        //分段上傳範例
+        //分段上傳範例 (沒試過)
         private static async Task UploadFileAsync()
         {
             try
