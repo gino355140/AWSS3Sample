@@ -49,8 +49,13 @@ namespace MakeS3RequestTest
                 string sqlStr = "Select * from S3Object";
 
                 //列出bucket and bucket內的東西
-                ListingObjectsAsync("2021/01").Wait();
-                ListingObjectsAsync("2021/02").Wait();
+                DateTime start = new DateTime(2019, 09, 01);
+                DateTime end = new DateTime(2020, 01, 30);
+                List<string> keys = getYearMotnhs(start, end);
+                foreach (string key in keys)
+                {
+                    ListingObjectsAsync(key).Wait();
+                }
                 Console.WriteLine("---------------------");
                 //讀取bucket and bucket內的東西
                 var result = ReadObjectDataAsync(fileName).Result;
@@ -60,7 +65,7 @@ namespace MakeS3RequestTest
                 Console.WriteLine("---------------------");
 
                 //上傳物件
-                WritingAnObjectAsync().Wait();
+                //WritingAnObjectAsync().Wait();
 
 
 
@@ -237,7 +242,7 @@ namespace MakeS3RequestTest
                 {
                     BucketName = bucketName,
                     Key = keyName1,
-                    ContentBody = "sample text 3333"
+                    ContentBody = "sample text 4444"
                 };
 
                 PutObjectResponse response1 = await clientS3.PutObjectAsync(putRequest1);
@@ -251,6 +256,7 @@ namespace MakeS3RequestTest
                 testClasses.Add(new TestClass() { Name = "a123", Company = "a456", Favorite_Color = "a789" });
                 testClasses.Add(new TestClass() { Name = "b123", Company = "b456", Favorite_Color = "b789" });
                 testClasses.Add(new TestClass() { Name = "c123", Company = "c456", Favorite_Color = "c789" });
+                testClasses.Add(new TestClass() { Name = "d123", Company = "d456", Favorite_Color = "d789" });
 
                 // 2. Put the object-set ContentType and add metadata.
                 var putRequest2 = new PutObjectRequest
@@ -347,6 +353,56 @@ namespace MakeS3RequestTest
             public string Favorite_Color { get; set; }
 
             public string Test { get { return this.Name + this.Company; } }
+        }
+
+        public static List<string> getYearMotnhs(DateTime start, DateTime end)
+        {
+            List<string> result = new List<string>();
+            int overYearNum = end.Year - start.Year; //是否跨年度
+            int overMonthNum = end.Month - start.Month; //差的月數
+
+            if (overYearNum == 0)
+            {
+                if (overMonthNum == 0) //當月份
+                    result.Add(start.ToString("yyyy") + "/" + start.ToString("MM"));
+                else
+                {
+                    for (int i = 0; i <= overMonthNum; i++)
+                        result.Add(start.ToString("yyyy") + "/" + start.AddMonths(i).ToString("MM"));
+                }
+            }
+            else
+            {
+                switch (overYearNum)
+                {
+                    case 1:
+                        for (int i = 0; i <= (12 - start.Month); i++) //初始 ~ 當年12月
+                            result.Add(start.ToString("yyyy") + "/" + start.AddMonths(i).ToString("MM"));
+
+                        for (int i = 0; i < end.Month; i++) //隔年1月 ~ 結束(倒退算)
+                            result.Add(end.ToString("yyyy") + "/" + end.AddMonths(-i).ToString("MM"));
+                        break;
+                    default:
+                        for (int i = 0; i <= (12 - start.Month); i++) //初始 ~ 當年12月
+                            result.Add(start.ToString("yyyy") + "/" + start.AddMonths(i).ToString("MM"));
+        
+                        for (int i = 1; i < overYearNum; i++) //跨年度
+                        {
+                            DateTime month = new DateTime(start.AddYears(i).Year, 1, 1);
+                            for (int j = 0; j < 12; j++) // 1~12月
+                            {
+                                result.Add(start.AddYears(i).ToString("yyyy") + "/" + month.AddMonths(j).ToString("MM"));
+                            }
+                        }
+                            
+                        for (int i = 0; i < end.Month; i++) //隔年1月 ~ 結束(倒退算)
+                            result.Add(end.ToString("yyyy") + "/" + end.AddMonths(-i).ToString("MM"));
+
+                        break;
+                }
+            }
+
+            return result;
         }
     }
 }
