@@ -39,19 +39,20 @@ namespace MakeS3RequestTest
                 var response = client.ListBucketsAsync();
                 var list = response.Result;
 
+                //可列出所有Bucket，範例先以自己的做測試
                 S3Bucket s3Bucket = list.Buckets.Find(x => x.BucketName == bucketName);
 
                 Console.WriteLine("S3 Start");
                 Console.WriteLine("---------------------");
 
-                //"2021/01/SQL_Test.csv","123.csv"
+                //"2021/01/SQL_Test.csv","123.csv"  測試用檔名
                 string fileName = "2021/02/SQL_Test_big.csv";
-                string sqlStr = "Select * from S3Object";
+                string sqlStr = "Select * from S3Object"; //除from S3Object固定外，其餘皆和一般SQL語法相同 
 
                 //列出bucket and bucket內的東西
-                DateTime start = new DateTime(2019, 09, 01);
-                DateTime end = new DateTime(2020, 01, 30);
-                List<string> keys = getYearMotnhs(start, end);
+                DateTime start = new DateTime(2019, 09, 01); //起始時間
+                DateTime end = new DateTime(2020, 01, 30);   //結束時間
+                List<string> keys = getYearMotnhs(start, end);  //時間區間轉字串
                 foreach (string key in keys)
                 {
                     ListingObjectsAsync(key).Wait();
