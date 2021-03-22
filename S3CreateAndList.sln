@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1259
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "S3CreateAndList", "S3CreateAndList\S3CreateAndList.csproj", "{89AA5D0E-3ED2-40CE-8531-24836B9586AF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeS3RequestTest", "MakeS3RequestTest\MakeS3RequestTest.csproj", "{8179A997-4B7E-41AE-A9D9-DE89FFC77601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MakeS3RequestTest", "MakeS3RequestTest\MakeS3RequestTest.csproj", "{8179A997-4B7E-41AE-A9D9-DE89FFC77601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{89AA5D0E-3ED2-40CE-8531-24836B9586AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89AA5D0E-3ED2-40CE-8531-24836B9586AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89AA5D0E-3ED2-40CE-8531-24836B9586AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89AA5D0E-3ED2-40CE-8531-24836B9586AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8179A997-4B7E-41AE-A9D9-DE89FFC77601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8179A997-4B7E-41AE-A9D9-DE89FFC77601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8179A997-4B7E-41AE-A9D9-DE89FFC77601}.Release|Any CPU.ActiveCfg = Release|Any CPU
